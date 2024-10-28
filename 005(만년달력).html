@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만년 달력</title>
+    <style>
+        body {
+            background-color: #798645;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            background-color: #fefae0;
+        }
+
+        th,
+        td {
+            border: 1px solid grey;
+            padding: 8px;
+            width: 14.28%;
+        }
+
+        th {
+            background-color: #f2eed7;
+            font-weight: bold;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .controls span {
+            font-weight: bold;
+            margin-right: 5px;
+            color: #fefae0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 style="text-align: center; color: #fefae0">만년 달력</h1>
+
+    <div class="controls">
+
+        <span>연도:</span>
+        <input style="background-color: #fefae0; border-radius: 3px; 
+        border: none;" type="number" id="year" value="2023" min="1900" 
+        max="2100">
+
+        <span>월:</span>
+        <input style="background-color: #fefae0; border-radius: 3px; 
+        border: none;" type="number" id="month" value="1" min="1" 
+        max="12">
+
+        <button style="background-color: #fefae0; border-radius: 3px; 
+        border: none;" type="number" id="month" value="1" min="1" 
+        max="12" onclick="createCalendar()">달력 보기</button>
+
+    </div>
+
+    <div id="calendar"></div>
+
+    <script>
+
+        function createCalendar() {
+            const year = document.getElementById("year").value;
+            const month = document.getElementById("month").value - 1;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            let calendar = `<table>
+                <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>`;
+                
+            let day = 1;
+
+            calendar += "<tr>";
+            for (let i = 0; i < firstDay; i++) {
+                calendar += "<td></td>";
+            }
+
+            for (let i = firstDay; i < 7; i++) {
+                calendar += `<td>${day}</td>`;
+                day++;
+            }
+            calendar += "</tr>";
+
+            while (day <= lastDate) {
+                calendar += "<tr>";
+                for (let i = 0; i < 7; i++) {
+                    if (day <= lastDate) {
+                        calendar += `<td>${day}</td>`;
+                        day++;
+                    } else {
+                        calendar += "<td></td>";
+                    }
+                }
+                calendar += "</tr>";
+            }
+
+            calendar += "</table>";
+            document.getElementById("calendar").innerHTML = calendar;
+        }
+
+        createCalendar();
+
+    </script>
+
+</body>
+
+</html>
